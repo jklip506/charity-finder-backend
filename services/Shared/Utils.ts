@@ -1,4 +1,4 @@
-import { APIGatewayProxyEvent } from "aws-lambda";
+import { APIGatewayProxyEvent, APIGatewayProxyResult } from "aws-lambda";
 
 
 
@@ -10,4 +10,13 @@ export function getEventBody(event: APIGatewayProxyEvent) {
 
     return typeof event.body == 'object' ? event.body : JSON.parse(event.body);
     
+}
+
+//Gets rid of cors issues when launching application
+export function addCorsHeader(result: APIGatewayProxyResult) {
+    result.headers = {
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods': '*'
+    };
 }
